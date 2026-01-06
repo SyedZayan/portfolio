@@ -1,0 +1,11 @@
+---
+import { skills } from "../data/site";
+---
+
+<section class="border-y py-6">
+  <div class="flex flex-wrap gap-2">
+    {skills.map((s) => (
+      <span class="rounded-full border px-3 py-1 text-sm text-zinc-700">{s}</span>
+    ))}
+  </div>
+</section>

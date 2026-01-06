@@ -1,0 +1,198 @@
+---
+const FORMSPREE_ACTION = "https://formspree.io/f/xkoglaqq";
+const TURNSTILE_SITE_KEY = "0x4AAAAAACK24kkyd51lbPz5"; // optional
+---
+
+<dialog
+  id="contactDialog"
+  class="
+    fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+    w-[min(92vw,720px)]
+overflow-hidden
+    rounded-3xl border border-zinc-200 bg-white p-0 text-zinc-900 shadow-2xl
+    dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-100
+  "
+>
+  <!-- Wrapper: header + scrollable body + sticky footer -->
+  <div class="flex max-h-[90vh] flex-col">
+    <!-- Header (sticky) -->
+    <div class="sticky top-0 z-10 border-b border-zinc-200 bg-white/90 px-6 py-4 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400">Let’s work together</p>
+          <h3 class="text-lg font-semibold">Request a quote</h3>
+        </div>
+
+        <button
+          type="button"
+          data-close-contact
+          class="btn btn-ghost !px-3 !py-2"
+          aria-label="Close"
+          title="Close"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+
+    <form id="contactForm" action={FORMSPREE_ACTION} method="POST" class="flex min-h-0 flex-1 flex-col">
+      <!-- Scrollable BODY -->
+      <div class="min-h-0 flex-1 overflow-y-auto p-6">
+        <!-- Honeypot -->
+        <input name="_gotcha" class="hidden" tabindex="-1" autocomplete="off" />
+        <input type="hidden" name="subject" value="New Portfolio Lead (Popup Form)" />
+        <input type="hidden" name="page" id="pageField" value="" />
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label class="text-sm font-medium">Name</label>
+            <input
+              name="name"
+              required
+              class="mt-1 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none
+                     focus:ring-2 focus:ring-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:focus:ring-zinc-700"
+              placeholder="Your name"
+            />
+          </div>
+
+          <div>
+            <label class="text-sm font-medium">Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              class="mt-1 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none
+                     focus:ring-2 focus:ring-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:focus:ring-zinc-700"
+              placeholder="zayanali2003@gmail.com"
+            />
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label class="text-sm font-medium">Service</label>
+          <select
+            name="service"
+            required
+            class="mt-1 w-full rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none
+                   focus:ring-2 focus:ring-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:focus:ring-zinc-700"
+          >
+            <option value="" disabled selected>Select a service</option>
+            <option>Web Scraping / Data Extraction</option>
+            <option>Dashboard / Reporting</option>
+            <option>Automation (Excel / Workflow)</option>
+            <option>Machine Learning Prototype</option>
+            <option>AI / LLM Integration (Chatbot/RAG)</option>
+            <option>Research / Technical Writing</option>
+          </select>
+        </div>
+
+        <div class="mt-4">
+          <label class="text-sm font-medium">Message</label>
+          <textarea
+            name="message"
+            rows="5"
+            required
+            class="mt-1 w-full resize-none rounded-xl border border-zinc-200 bg-white px-4 py-3 text-sm outline-none
+                   focus:ring-2 focus:ring-zinc-300 dark:border-zinc-800 dark:bg-zinc-900 dark:focus:ring-zinc-700"
+            placeholder="Share your goal + website/data source + expected output (Excel/CSV/dashboard)."
+          ></textarea>
+        </div>
+
+        <!-- Turnstile (optional) -->
+        <div class="mt-5">
+          <div class="cf-turnstile" data-sitekey={TURNSTILE_SITE_KEY} data-theme="auto"></div>
+        </div>
+      </div>
+
+      <!-- Sticky FOOTER (always visible) -->
+      <div class="sticky bottom-0 border-t border-zinc-200 bg-white/90 px-6 py-4 backdrop-blur dark:border-zinc-800 dark:bg-zinc-950/90">
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="submit" class="btn btn-primary">Send</button>
+          <button type="button" data-close-contact class="btn btn-ghost">Cancel</button>
+          <p id="contactStatus" class="text-sm text-zinc-600 dark:text-zinc-400"></p>
+        </div>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<script>
+  const dialog = document.getElementById("contactDialog");
+  const status = document.getElementById("contactStatus");
+  const pageField = document.getElementById("pageField");
+
+  function openContact() {
+    if (status) status.textContent = "";
+    if (pageField) pageField.value = window.location.href;
+    document.body.style.overflow = "hidden";
+    dialog?.showModal();
+  }
+
+  function closeContact() {
+    dialog?.close();
+    document.body.style.overflow = "";
+  }
+
+  // Open triggers
+  document.querySelectorAll("[data-open-contact]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      openContact();
+    });
+  });
+
+  // Close triggers
+  document.querySelectorAll("[data-close-contact]").forEach((btn) => {
+    btn.addEventListener("click", closeContact);
+  });
+
+  // Close on backdrop click
+  dialog?.addEventListener("click", (e) => {
+    if (e.target === dialog) closeContact();
+  });
+
+  // Unlock scroll on ESC/close
+  dialog?.addEventListener("close", () => {
+    document.body.style.overflow = "";
+  });
+
+  // AJAX submit (keep you on page)
+  const form = document.getElementById("contactForm");
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (status) status.textContent = "Sending...";
+
+    try {
+      const res = await fetch(form.action, {
+        method: "POST",
+        body: new FormData(form),
+        headers: { Accept: "application/json" },
+      });
+
+      if (res.ok) {
+        if (status) status.textContent = "✅ Sent! I’ll reply soon.";
+        form.reset();
+        setTimeout(() => closeContact(), 700);
+      } else {
+        if (status) status.textContent = "❌ Failed. Try again.";
+      }
+    } catch {
+      if (status) status.textContent = "❌ Network error.";
+    }
+  });
+</script>
+
+<style>
+  dialog#contactDialog { margin: 0; }
+  dialog#contactDialog::backdrop { background: rgba(0,0,0,0.55); }
+
+  dialog#contactDialog[open] {
+    animation: modal-pop 160ms ease-out;
+  }
+  @keyframes modal-pop {
+    from { opacity: 0; transform: translate(-50%, -48%) scale(0.985); }
+    to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+</style>

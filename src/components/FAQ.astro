@@ -1,0 +1,19 @@
+---
+import { faqs } from "../data/site";
+---
+
+<section class="section">
+  <h2>FAQ</h2>
+  <p class="section-lead">Quick answers before you message.</p>
+
+  <div class="mt-8 space-y-3">
+    {faqs.map((f) => (
+      <details class="card">
+        <summary class="cursor-pointer select-none text-base font-semibold">
+          {f.q}
+        </summary>
+        <p class="mt-3 text-zinc-700 dark:text-zinc-300">{f.a}</p>
+      </details>
+    ))}
+  </div>
+</section>

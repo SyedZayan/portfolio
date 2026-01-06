@@ -1,0 +1,27 @@
+<button id="themeToggle" class="px-3 py-2">
+  <span id="themeIcon">🌙</span>
+</button>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const root = document.documentElement;
+    const key = "theme";
+
+    const apply = (theme) => {
+      root.classList.toggle("dark", theme === "dark");
+      document.getElementById("themeIcon").textContent =
+        theme === "dark" ? "☀️" : "🌙";
+    };
+
+    apply(
+      localStorage.getItem(key) ??
+        (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+    );
+
+    document.getElementById("themeToggle").onclick = () => {
+      const next = root.classList.contains("dark") ? "light" : "dark";
+      localStorage.setItem(key, next);
+      apply(next);
+    };
+  });
+</script>

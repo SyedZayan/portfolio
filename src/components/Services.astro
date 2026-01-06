@@ -1,0 +1,21 @@
+---
+import { services } from "../data/site";
+---
+
+<section id="services" class="py-16">
+  <h2 class="text-2xl font-bold">Services</h2>
+  <p class="mt-2 text-zinc-700">Pick what you need - I’ll deliver a clean, usable result.</p>
+
+<div class="mt-8 grid gap-5 md:grid-cols-2">
+  {services.map((srv) => (
+    <div class="card">
+      <h3>{srv.title}</h3>
+      <p class="mt-2 text-zinc-700 dark:text-zinc-300">{srv.desc}</p>
+      <ul class="mt-4 list-disc pl-5 text-zinc-700 dark:text-zinc-300">
+        {srv.deliverables.map((d) => <li>{d}</li>)}
+      </ul>
+    </div>
+  ))}
+</div>
+
+</section>

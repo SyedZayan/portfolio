@@ -1,0 +1,20 @@
+---
+import { testimonials } from "../data/site";
+---
+
+<section class="section">
+  <h2>What people say</h2>
+  <p class="section-lead">Social proof builds trust. Replace with real feedback as you go.</p>
+
+  <div class="mt-8 grid gap-5 lg:grid-cols-2">
+    {testimonials.map((t) => (
+      <div class="card">
+        <p class="text-zinc-700 dark:text-zinc-300">“{t.text}”</p>
+        <div class="mt-5 text-sm">
+          <p class="font-semibold">{t.name}</p>
+          <p class="text-zinc-600 dark:text-zinc-400">{t.role}</p>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

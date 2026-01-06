@@ -1,0 +1,48 @@
+---
+import { projects } from "../data/site";
+---
+
+<section id="projects" class="section">
+  <h2>Projects</h2>
+  <p class="section-lead">Some of my Recent work.</p>
+
+  <div class="mt-10 grid gap-6">
+    {projects.map((p) => (
+      <article class="card">
+        <div class="grid gap-6 lg:grid-cols-12 lg:items-start">
+          {/* Main content */}
+          <div class="lg:col-span-8">
+            <h3 class="text-xl font-semibold">{p.title}</h3>
+
+            <div class="mt-4 space-y-3 text-zinc-700 dark:text-zinc-300">
+              <p><b>Problem:</b> {p.problem}</p>
+              <p><b>Solution:</b> {p.solution}</p>
+              <p><b>Impact:</b> {p.impact}</p>
+            </div>
+
+            <div class="mt-5 flex flex-wrap gap-2">
+              {p.tech.map((t) => (
+                <span class="pill">{t}</span>
+              ))}
+            </div>
+          </div>
+
+          {/* Highlights box */}
+          <aside class="lg:col-span-4">
+            <div class="rounded-2xl border border-zinc-200 bg-zinc-50 p-5 dark:border-zinc-800 dark:bg-zinc-950">
+              <p class="text-sm font-semibold">Highlights</p>
+              <ul class="mt-3 space-y-2 text-sm text-zinc-700 dark:text-zinc-300">
+                {p.highlights?.map((h) => (
+                  <li class="flex gap-2">
+                    <span>✅</span>
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>

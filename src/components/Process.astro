@@ -1,0 +1,38 @@
+---
+import { processSteps } from "../data/site";
+---
+
+<section class="section" aria-labelledby="how-i-work">
+  <h2 id="how-i-work">How I work</h2>
+  <p class="section-lead">
+    A clear workflow for <b>Python development</b>, <b>web scraping</b>, <b>automation</b>, <b>dashboards</b>,
+    and <b>machine learning prototypes</b> with defined scope, milestones, testing, and clean delivery.
+  </p>
+
+  <div class="mt-10 grid gap-6 lg:grid-cols-2">
+    {processSteps.map((s, i) => (
+      <article class="card">
+        <div class="flex items-start gap-4">
+          <div class="pill font-semibold">{String(i + 1).padStart(2, "0")}</div>
+          <div>
+            <h3 class="text-xl font-semibold">{s.title}</h3>
+            <p class="mt-2 text-zinc-700 dark:text-zinc-300">{s.desc}</p>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="mt-10 flex flex-wrap items-center gap-3">
+    <button type="button" class="btn btn-primary no-underline" data-open-contact>
+      Start a project
+    </button>
+    <a href="#projects" class="btn btn-ghost no-underline">
+      View recent work
+    </a>
+  </div>
+
+  <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400">
+    Deliverables typically include: <b>Python code</b>, <b>structured Excel/CSV outputs</b>, and <b>documentation</b>.
+  </p>
+</section>
