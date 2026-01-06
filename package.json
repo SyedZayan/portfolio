@@ -11,5 +11,8 @@
   "dependencies": {
     "astro": "^5.16.6",
     "simple-icons": "^16.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.1.18"
   }
 }
